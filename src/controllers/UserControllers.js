@@ -7,7 +7,7 @@ async function getUsers(req, res) {
     } catch (error) {
         console.log(`Erro ao procurar usuários: ${error}`);
     }
-}
+};
 
 async function createUser(req, res) {
     try {
@@ -17,16 +17,26 @@ async function createUser(req, res) {
     } catch (error) {
         console.log(`Fala ao criar usuário: ${error}`);
     }
-}
+};
 
 async function deleteUser(req, res) {
     try {
         const deleted = await User.findByIdAndDelete(req.params.id);
-        if (!deleted) return res.json({error: "Livro não encontrado"});
-        return res.json({message: "Livro removido com sucesso!"});
+        if (!deleted) return res.json({ error: "Livro não encontrado" });
+        return res.json({ message: "Livro removido com sucesso!" });
     } catch (error) {
         console.log(`Erro ao remover livro: ${error}`);
     }
-}
+};
 
-export { getUsers, createUser, deleteUser };
+async function editUser(req, res) {
+    try {
+        const update = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!update) return res.json({ error: "Livro não encontrado" });
+        return res.json(update);
+    } catch (error) {
+        console.log(`Erro ao editar livro: ${error}`);
+    }
+};
+
+export { getUsers, createUser, deleteUser, editUser };
